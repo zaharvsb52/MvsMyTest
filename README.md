@@ -2,14 +2,13 @@
 * .net core 2.0 MVC приложение, апишка для сохранения, апдейта, удаления сущности Stuff. Поля: Id, Name, Description, Tags (массив из строк)
 причем чтобы апдейт был через тот же метод, что и создание - через POST /api/stuffs. И если в body передается айдишник, то апдейтим. 
 * И именно переданные поля
-* Description - nullable.
+ Description - nullable.
 * т.е. если делаем
-* POST
-* {
-*  Id: 10,
-*  Description: null
-* }
-
+POST
+{
+  Id: 10,
+  Description: null
+}
 * то это значит проапдейтить description. А если
 * POST
 * {

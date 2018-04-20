@@ -7,7 +7,6 @@ namespace MvsMyTest.Services
 {
     public class StuffService : IStuffService
     {
-        private const string Undefined = "__undefined__";
         private readonly StuffContext _stuffContext;
         private readonly TagItemContext _tagContext;
 
@@ -39,18 +38,18 @@ namespace MvsMyTest.Services
                     if (updateitem == null)
                         return;
 
-                    if (item.Name?.ToLower() != Undefined)
+                    if (item.Name?.ToLower() != StuffItem.Undefined)
                         updateitem.Name = item.Name;
-                    if (item.Description?.ToLower() != Undefined)
+                    if (item.Description?.ToLower() != StuffItem.Undefined)
                         updateitem.Description = item.Description;
 
                     _stuffContext.StuffItems.Update(updateitem);
                 }
                 else //Add new
                 {
-                    if (item.Name?.ToLower() == Undefined)
+                    if (item.Name?.ToLower() == StuffItem.Undefined)
                         item.Name = null;
-                    if (item.Description?.ToLower() == Undefined)
+                    if (item.Description?.ToLower() == StuffItem.Undefined)
                         item.Description = null;
 
                     _stuffContext.StuffItems.Add(item);

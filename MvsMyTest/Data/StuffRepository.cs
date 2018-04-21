@@ -53,9 +53,21 @@ namespace MvsMyTest.Data
                     }
 
                     if (item.Tags != null && item.Tags.Count > 0)
+                    {
+                        await Task.Run(() =>
+                        {
+                            var id = 0;
+                            foreach (var tag in item.Tags)
+                            {
+                                tag.Id = ++id;
+                                tag.StuffId = item.Id.Value;
+                            }
+                        });
+
                         update = update == null
                             ? builder.Set(p => p.Tags, item.Tags)
                             : update.Set(p => p.Tags, item.Tags);
+                    }
 
                     if (update != null) //есть, что обновить
                     {

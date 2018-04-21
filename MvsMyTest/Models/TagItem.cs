@@ -1,8 +1,11 @@
-﻿namespace MvsMyTest.Models
+﻿using MongoDB.Bson.Serialization.Attributes;
+
+namespace MvsMyTest.Models
 {
-    public class TagItem
+    public class TagItem : IModel
     {
         //[NotMapped]
+        [BsonId]
         public int Id { get; set; }
 
         public string Value { get; set; }

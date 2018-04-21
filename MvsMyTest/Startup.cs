@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MvsMyTest.Data;
 using MvsMyTest.Models;
 using MvsMyTest.Services;
 
@@ -20,6 +21,7 @@ namespace MvsMyTest
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             ConfigureTestingServices(services);
+            ConfigureProductionServices(services);
 
             ConfigureServices(services);
         }
@@ -28,13 +30,28 @@ namespace MvsMyTest
         {
             services.AddDbContext<StuffContext>(p => p.UseInMemoryDatabase("MyDb"));
             services.AddDbContext<TagItemContext>(p => p.UseInMemoryDatabase("MyDb"));
+
+            // только один раз на один запрос
+            services.AddScoped<IStuffService, StuffService>();
+        }
+
+        private void ConfigureProductionServices(IServiceCollection services)
+        {
+            services.Configure<Settings>(options =>
+            {
+                options.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
+                options.Database = Configuration.GetSection("MongoConnection:Database").Value;
+            });
+
+            // создаётся заново каждый раз
+            services.AddTransient<IMyDbContext, MyDbContext>();
+            services.AddTransient<INoteRepository, NoteRepository>();
+            services.AddTransient<IStuffRepository, StuffRepository>();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IStuffService, StuffService>();
-
             services.AddMvc();
         }
 

@@ -59,7 +59,7 @@ namespace MvsMyTest.Data
 
                     var doc = Document;
                     if (doc != null)
-                        return await doc.UpdateOneAsync(Builders<StuffItem>.Filter.Empty, update);
+                        return await doc.UpdateOneAsync(Builders<StuffItem>.Filter.Eq(p => p.Id, item.Id), update);
                 }
             }
             else //Add new

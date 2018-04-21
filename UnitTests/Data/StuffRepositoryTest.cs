@@ -78,6 +78,33 @@ namespace UnitTests.Data
             await _service.Update(item);
 
             Assert.Equal(item.Name, StuffItem.Undefined);
+
+            item = new StuffItem
+            {
+                Id = 1,
+                Tags = new List<TagItem>
+                {
+                    new TagItem{ Value = "grey"},
+                    new TagItem{ Value = "white"}
+                }
+            };
+
+            await _service.Update(item);
+
+            Assert.Equal(item.Description, StuffItem.Undefined);
+            Assert.Equal(item.Name, StuffItem.Undefined);
+        }
+
+        // тест пустого update'а
+        [Fact]
+        public async Task UpdateEmptyStuffItem()
+        {
+            var item = new StuffItem
+            {
+                Id = 1
+            };
+
+            await _service.Update(item);
         }
 
         [Fact]

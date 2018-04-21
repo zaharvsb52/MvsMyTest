@@ -57,9 +57,12 @@ namespace MvsMyTest.Data
                             ? builder.Set(p => p.Tags, item.Tags)
                             : update.Set(p => p.Tags, item.Tags);
 
-                    var doc = Document;
-                    if (doc != null)
-                        return await doc.UpdateOneAsync(Builders<StuffItem>.Filter.Eq(p => p.Id, item.Id), update);
+                    if (update != null) //есть, что обновить
+                    {
+                        var doc = Document;
+                        if (doc != null)
+                            return await doc.UpdateOneAsync(Builders<StuffItem>.Filter.Eq(p => p.Id, item.Id), update);
+                    }
                 }
             }
             else //Add new

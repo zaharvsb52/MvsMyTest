@@ -7,8 +7,7 @@
 {
   Id: 10,
   Description: null
-}
-* то это значит проапдейтить description. А если POST
+}, то это значит проапдейтить description. А если POST
 {
  Id: 10,
  Name: "namea"
